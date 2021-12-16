@@ -1,0 +1,75 @@
+---
+title: "graffiti_practice"
+author: Sangbin Lee
+- | Student number: 21107925   
+date: "`r format(Sys.time(), '%X, %d %B, %Y')`"
+output: html_document
+---
+
+# Original Declaration
+I, [Sangbin Lee], confirm that the work presented in this assessment is my own. Where information has been derived from other sources, I confirm that this has been indicated in the work.
+date: "`r format(Sys.time(), '%X, %d %B, %Y')`"
+
+## Initial Project Overview
+ddd
+
+## Data Summary
+'Graffiti.csv' file contains the 686,504 graffiti inforations gathered from 2009 to 2021. 
+
+
+```{r warning=FALSE, message=FALSE}
+#package call
+library(tidyverse) # pipe operator and dplyr
+library(fs) #
+library(sf)
+library(tmap)
+library(janitor)
+library(broom)
+library(car)
+library(spdep)
+
+```
+
+```{r}
+shape <- st_read(here::here("Data", "geo_export_1880c57b-4ccd-428f-abe5-a20aa5159802.shp"))%>%
+  st_transform(., crs=7131)
+
+qtm(shape)
+st_geometry(shape)
+```
+
+```{r}
+graffiti <- read_csv(here::here("Data", "Graffiti.csv"))
+```
+
+```{r}
+test
+
+```
+
+```{r}
+```
+
+```{r}git
+```
+
+```{r}
+```
+
+```{r}
+```
+
+```{r}
+```
+
+```{r}
+```
+
+```{r}
+```
+
+```{r}
+```
+
+```{r}
+```
