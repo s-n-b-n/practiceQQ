@@ -39,27 +39,75 @@ st_geometry(shape)
 ```
 
 ```{r}
-graffiti <- read_csv(here::here("Data", "Graffiti.csv"))
+graffiti <- read_csv("https://data.sfgov.org/api/views/vg6y-3pcr/rows.csv?accessType=DOWNLOAD&bom=true&format=true")
 ```
 
 ```{r}
-test
+graffiti2<-graffiti%>%
+  separate(., Point, c("A", "B"), sep = ",")
+
+head(graffiti2, n=5)
+```
+
+```{r}
+graffiti2$A<-parse_number(graffiti2$A) ## leading $ and grouping character , ignored
+graffiti2$B<-parse_number(graffiti2$B) ## leading $ and grouping character , ignored
+```
+
+```{r}
+graffiti3<- graffiti2%>%
+  filter(A !=	0)%>%
+  filter(B != 0)%>%
+  st_as_sf(., coords = c("B", "A"),
+           crs = 4326)
+```
+
+```{r plot}
+tmap_mode("plot")
+tm_shape(shape) +
+  tm_polygons(col = NA, alpha = 0.5) +
+  tm_shape(graffiti4) +
+  tm_dots(col = "blue")
+```
+
+```{r}
+points_sf_joined1 <- shape%>%
+  st_join(graffiti4)
+
+```
+
+```{r plot2}
+tm_shape(shape_within)+
+  tm_polygons(col=NA, alpha=0.5)
+
+tmap_mode('plot')
+tm_shape(shape_within)+
+  tm_polygons(col=NA, alpha=0.5)+
+  tm_shape(graffiti_within)+
+  tm_dots(col='blue')
 
 ```
 
 ```{r}
-```
+graffiti4SP.ppp%>%
+  density(., sigma=50)%>%
+  plot(main = 'Graffiti Kernel Density Estimation)
 
-```{r}git
-```
-
-```{r}
-```
-
-```{r}
 ```
 
 ```{r}
+tm_shape(points_sf_joined) +
+  tm_polygons('density',
+              style='jenks',
+              palette='Greys',
+              midpoint=NA,
+              popup.vars=c('neighborhood', 'density'),
+              title='Graffiti Density')
+```
+
+```{r}
+
+
 ```
 
 ```{r}
